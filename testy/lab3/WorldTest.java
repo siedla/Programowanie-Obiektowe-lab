@@ -1,5 +1,7 @@
-package agh.cs.lab2;
+/*package agh.cs.lab2;
 
+import agh.cs.lab3.Animal;
+import agh.cs.lab3.OptionsParser;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
@@ -41,4 +43,4 @@ class WorldTest {
     }
 
 
-}
+}*/
