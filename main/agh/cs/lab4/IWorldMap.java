@@ -66,5 +66,7 @@ public interface IWorldMap {
 
     void toString(IWorldMap map);
 
-    Animal animalForTheTest(int i);
+    String getDirection(int i);
+
+    Vector2d getPosition(int i);
 }

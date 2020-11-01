@@ -23,21 +23,18 @@ class WorldTest {
         map.place(new Animal(map,new Vector2d(3,4)));
         map.run(directions);
 
-        Animal animal0 = map.animalForTheTest(0);
-        Animal animal1 = map.animalForTheTest(1);
+        assertEquals(new Vector2d(2,3), map.getPosition(0));// Sprawdzam czy po pierwszych 6 ruchach zwierzaki nie weszły na siebie
+        assertEquals(new Vector2d(3,3), map.getPosition(1));
 
-        assertEquals(new Vector2d(2,3), animal0.getPosition());// Sprawdzam czy po pierwszych 6 ruchach zwierzaki nie weszły na siebie
-        assertEquals(new Vector2d(3,3), animal1.getPosition());
-
-        assertEquals(">", animal0.toString()); // Sprawdzam czy są zwrócone w dobrym kierunku
-        assertEquals("<", animal1.toString());
+        assertEquals(">", map.getDirection(0)); // Sprawdzam czy są zwrócone w dobrym kierunku
+        assertEquals("<", map.getDirection(1));
 
         String[] moves2 = {"r", "r", "f", "f", "f", "f", "f", "f", "f", "f"};
         List<MoveDirection> directions2 = new OptionsParser().parse(moves2);
         map.run(directions2);
 
-        assertEquals(new Vector2d(2,0), animal0.getPosition());// Sprawdzam czy nie wychodzą za mape
-        assertEquals(new Vector2d(3,5), animal1.getPosition());
+        assertEquals(new Vector2d(2,0), map.getPosition(0));// Sprawdzam czy nie wychodzą za mape
+        assertEquals(new Vector2d(3,5), map.getPosition(1));
 
     }
 }

@@ -67,7 +67,11 @@ public class RectangularMap implements IWorldMap{
         System.out.println(draw.draw(lowerLeft, upperRight));
     }
 
-    public Animal animalForTheTest(int i) {
-        return animals.get(i);
+    public Vector2d getPosition(int i){
+        return animals.get(i).getPosition();
+    }
+
+    public String getDirection(int i){
+        return  animals.get(i).toString();
     }
 }
