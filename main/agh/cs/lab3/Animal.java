@@ -17,8 +17,7 @@ public class Animal{
     }
 
     public Animal(IWorldMap map){
-        position = new Vector2d(2, 2);
-        this.map = map;
+        this(map, new Vector2d(2, 2));
     }
 
     @Override

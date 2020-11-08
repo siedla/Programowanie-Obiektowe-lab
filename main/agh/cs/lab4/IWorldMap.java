@@ -66,7 +66,5 @@ public interface IWorldMap {
 
     void toString(IWorldMap map);
 
-    String getDirection(int i);
 
-    Vector2d getPosition(int i);
 }
