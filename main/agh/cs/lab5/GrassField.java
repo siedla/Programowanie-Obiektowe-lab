@@ -1,7 +1,7 @@
 package agh.cs.lab5;
 
 import agh.cs.lab2.Vector2d;
-import agh.cs.lab3.Animal;
+
 import java.util.Random;
 
 public class GrassField extends AbstaractWorldMap {
@@ -14,25 +14,23 @@ public class GrassField extends AbstaractWorldMap {
             int y = rand.nextInt((int) Math.sqrt(n * 10));
             if(occupied[x][y] == 0){
                 occupied[x][y] = 1;
-                grass.add(new Grass(new Vector2d(x,y)));
+                Grass newGrass = new Grass(new Vector2d(x,y));
+                grassMap.put(newGrass.getPosition(), newGrass);
+                grass.add(newGrass);
             }
             else i--;
         }
     }
 
-    @Override
-    public boolean canMoveTo(Vector2d position) {
-        return position.follows(lowerLeft) && position.precedes(upperRight ) && !isOccupiedByAnimal(position);
-    }
 
     public Vector2d[] minMax(){
         Vector2d min = new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE);
         Vector2d max = new Vector2d(0,0);
-        for(Animal animal : animals){
+        for(AbstractWorldMapElement animal : animals){
             min = min.lowerLeft(animal.getPosition());
             max = max.upperRight(animal.getPosition());
         }
-        for(Grass grass:grass){
+        for(AbstractWorldMapElement grass:grass){
             min = min.lowerLeft(grass.getPosition());
             max = max.upperRight(grass.getPosition());
         }

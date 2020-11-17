@@ -77,7 +77,7 @@ public class MapVisualiser {
     private String drawObject(Vector2d currentPosition) {
         String result;
         if (this.map.isOccupied(currentPosition)) {
-            Optional<Object> object = this.map.objectAt(currentPosition);
+            Optional<Object> object = Optional.of(this.map.objectAt(currentPosition).get());
             result = object.orElse(EMPTY_CELL).toString();
         } else {
             result = EMPTY_CELL;

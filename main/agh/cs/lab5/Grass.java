@@ -3,20 +3,19 @@ package agh.cs.lab5;
 import agh.cs.lab2.Vector2d;
 
 
-public class Grass {
-    private final Vector2d postion;
+public class Grass extends AbstractWorldMapElement{
+
 
     public Grass(Vector2d initialPostion){
-        postion = initialPostion;
-    }
-
-    public Vector2d getPosition(){
-        return postion;
+        position = initialPostion;
     }
 
     public String toString() {
         return "*";
     }
 
+    public boolean isPassable() {
+        return true;
+    }
 
 }

@@ -9,15 +9,18 @@ import java.util.List;
 
 public class World {
     public static void main(String[] args) {
-        String[] moves = {"f", "b", "r", "l","f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"};
-        List<MoveDirection> directions = new OptionsParser().parse(moves);
+        try{
+            String[] moves = {"f", "b", "r", "l","f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"};
+            List<MoveDirection> directions = new OptionsParser().parse(moves);
 
-        AbstaractWorldMap map = new GrassField(10);
-        map.place(new Animal(map));
-        map.place(new Animal(map,new Vector2d(3,4)));
-        map.run(directions);
-        map.toString(map);
+            AbstaractWorldMap map = new GrassField(3);
+            map.place(new Animal(map));
+            map.place(new Animal(map,new Vector2d(3,4)));
+            map.run(directions);
+            map.toString(map);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex);
+        }
     }
-
 }
 
