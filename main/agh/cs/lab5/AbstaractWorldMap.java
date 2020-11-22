@@ -5,18 +5,19 @@ import agh.cs.lab2.Vector2d;
 import agh.cs.lab3.Animal;
 import agh.cs.lab4.IWorldMap;
 import agh.cs.lab4.MapVisualiser;
+import agh.cs.lab6.IPositionChangeObserver;
+import agh.cs.lab6.MapBoundary;
 
 import java.util.*;
 
-public abstract class AbstaractWorldMap implements IWorldMap {
+public abstract class AbstaractWorldMap implements IWorldMap, IPositionChangeObserver {
 
     protected static final Vector2d lowerLeft = new Vector2d(0, 0);
     protected Vector2d upperRight = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
     protected LinkedList<Animal> animals = new LinkedList<>();
-    protected LinkedList<Grass> grass = new LinkedList<>();
     protected Map<Vector2d,AbstractWorldMapElement> animalMap = new HashMap<>();
-    protected Map<Vector2d, AbstractWorldMapElement> grassMap = new HashMap<>();
 
+    protected MapBoundary elements = new MapBoundary();
     public void run(List<MoveDirection> directions) {
         int numberOfAnimals = animals.size();
 
@@ -26,8 +27,7 @@ public abstract class AbstaractWorldMap implements IWorldMap {
             current.move(directions.get(i));
             Vector2d positionAfter = current.getPosition();
             if(!positionBefore.equals(positionAfter)){
-                animalMap.remove(positionBefore);
-                animalMap.put(positionAfter,current);
+                current.notifyChangePosition(positionBefore, positionAfter);
             }
         }
     }
@@ -38,7 +38,11 @@ public abstract class AbstaractWorldMap implements IWorldMap {
     }
 
     public boolean place(Animal animal) {
+
         if(canMoveTo(animal.getPosition())){
+            animal.addObserver(this);
+            animal.addObserver(elements);
+            elements.addToList(animal);
             animalMap.put(animal.getPosition(),animal);
             animals.add(animal);
             return true;
@@ -48,18 +52,16 @@ public abstract class AbstaractWorldMap implements IWorldMap {
 
     public void toString(IWorldMap map) {
         MapVisualiser draw = new MapVisualiser(map);
-        Vector2d[] minMax = minMax();
-        System.out.println(draw.draw(minMax[0], minMax[1]));
+        System.out.println(draw.draw(elements.lowerLeft(), elements.upperRight()));
 
     }
 
     public Optional<AbstractWorldMapElement> objectAt(Vector2d position) {
-        AbstractWorldMapElement grassAt = grassMap.get(position);
+
         AbstractWorldMapElement animalAt = animalMap.get(position);
         if(animalAt != null)
             return Optional.of(animalAt);
-        if(grassAt != null)
-            return Optional.of(grassAt);
+
         return Optional.empty();
     }
 
@@ -73,6 +75,12 @@ public abstract class AbstaractWorldMap implements IWorldMap {
 
     public String getDirection(int i){
         return  animals.get(i).toString();
+    }
+
+    @Override
+    public void positionChanged(AbstractWorldMapElement movedElement,Vector2d oldPosition, Vector2d newPosition) {
+        animalMap.remove(oldPosition);
+        animalMap.put(newPosition, movedElement);
     }
 
     abstract protected Vector2d[] minMax();

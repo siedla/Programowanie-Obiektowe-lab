@@ -9,7 +9,5 @@ public abstract class AbstractWorldMapElement {
         return position;
     }
 
-    public abstract String toString();
-
     public abstract boolean isPassable();
 }

@@ -2,10 +2,12 @@ package agh.cs.lab5;
 
 import agh.cs.lab2.Vector2d;
 
-import java.util.Random;
+import java.util.*;
 
 public class GrassField extends AbstaractWorldMap {
 
+    private final Map<Vector2d, AbstractWorldMapElement> grassMap = new HashMap<>();
+    private final LinkedList<Grass> grass = new LinkedList<>();
     public GrassField(int n){
         int[][] occupied = new int[(int) Math.sqrt(n * 10)][(int) Math.sqrt(n * 10)];
         Random rand = new Random();
@@ -15,6 +17,7 @@ public class GrassField extends AbstaractWorldMap {
             if(occupied[x][y] == 0){
                 occupied[x][y] = 1;
                 Grass newGrass = new Grass(new Vector2d(x,y));
+                elements.addToList(newGrass);
                 grassMap.put(newGrass.getPosition(), newGrass);
                 grass.add(newGrass);
             }
@@ -22,7 +25,16 @@ public class GrassField extends AbstaractWorldMap {
         }
     }
 
-
+    public Optional<AbstractWorldMapElement> objectAt(Vector2d position){
+        if(super.objectAt(position).isPresent()){
+            return super.objectAt(position);
+        }
+        AbstractWorldMapElement grassAt = grassMap.get(position);
+        if(grassAt!=null){
+            return Optional.of(grassAt);
+        }
+        return Optional.empty();
+    }
     public Vector2d[] minMax(){
         Vector2d min = new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE);
         Vector2d max = new Vector2d(0,0);

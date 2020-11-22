@@ -11,7 +11,7 @@ public class World {
     public static void main(String[] args) {
         try{
             String[] moves = {"f", "b", "r", "l","f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"};
-            List<MoveDirection> directions = new OptionsParser().parse(moves);
+            List<MoveDirection> directions = OptionsParser.parse(moves);
 
             AbstaractWorldMap map = new GrassField(3);
             map.place(new Animal(map));
@@ -19,8 +19,9 @@ public class World {
             map.run(directions);
             map.toString(map);
         } catch (IllegalArgumentException ex) {
-            System.out.println(ex);
+            ex.printStackTrace();
         }
+
     }
 }
 

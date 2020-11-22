@@ -17,7 +17,7 @@ class WorldTest {
     @Test
     void main() {
         String[] moves = {"f", "b", "r", "l","f", "f"};
-        List<MoveDirection> directions = new OptionsParser().parse(moves);
+        List<MoveDirection> directions = OptionsParser.parse(moves);
         AbstaractWorldMap map = new GrassField(10);
         map.place(new Animal(map));
         map.place(new Animal(map,new Vector2d(3,4)));
@@ -30,7 +30,7 @@ class WorldTest {
         assertEquals("<", map.getDirection(1));
 
         String[] moves2 = {"r", "r", "f", "f", "f", "f", "f", "f", "f", "f"};
-        List<MoveDirection> directions2 = new OptionsParser().parse(moves2);
+        List<MoveDirection> directions2 = OptionsParser.parse(moves2);
         map.run(directions2);
 
         assertEquals(new Vector2d(2,0), map.getPosition(0));// Sprawdzam czy są na dobrej pozycji
